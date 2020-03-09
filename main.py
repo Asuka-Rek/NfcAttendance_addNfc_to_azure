@@ -236,21 +236,21 @@ class Application(tk.Frame):
                                     tourokubi=tourokubi, card_hash=self.cardID)
         if status_code == 200:
             self.dialog.destroy()
-            mes = "カードの登録が成功しました。¥n"
+            mes = "カードの登録が成功しました。\n"
             mes += "このカードに特別な権限を設定したい場合は管理者に連絡してください。"
             self.openResultDialog(displayText=mes)
             return
 
 
         elif status_code == 400:
-            mes = "入力された情報を登録できませんでした。次の点を確認してください。¥n"
-            mes += "・名前に特殊な文字を含んでいないか¥n"
+            mes = "入力された情報を登録できませんでした。次の点を確認してください。\n"
+            mes += "・名前に特殊な文字を含んでいないか\n"
             mes += "・誕生日に存在しない日付を入力していないか"
 
         else:
             # 応答は200,400に設定しているので、この分岐は起こらないはずだが、念のため。
-            mes = "予期せぬエラーが発生しました。¥n"
-            mes += "時間を置いて再試行してください。¥n"
+            mes = "予期せぬエラーが発生しました。\n"
+            mes += "時間を置いて再試行してください。\n"
             mes += "それでも解決しない場合は管理者に問い合わせてください。"
         
         self.mesLabel["text"] = mes

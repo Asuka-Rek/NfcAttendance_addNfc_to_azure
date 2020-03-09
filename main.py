@@ -20,7 +20,7 @@ class Application(tk.Frame):
     
     def create_widgets(self):
         self.fontStyle = tkFont.Font(family="System", size=26)
-        self.buttonFont = tk.Font(family="System", size=18)
+        self.buttonFont = tkFont.Font(family="System", size=18)
         self.textLabel = tk.Label(text=self.firstDispMes, font=self.fontStyle)
         self.textLabel.pack(side="top", expand=1)
         self.quitButton1 = tk.Button(text="キャンセルして終了", font=self.buttonFont, command=sys.exit)

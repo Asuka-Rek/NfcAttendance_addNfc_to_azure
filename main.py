@@ -14,11 +14,13 @@ class Application(tk.Frame):
         super().__init__(master=master)
         self.master = master
         self.pack()
+        self.firstDispMes = "新しく登録するカードをタッチしてください。"
+        self.newWinMes = "新規ウィンドウを確認してください。"
         self.create_widgets()
     
     def create_widgets(self):
         self.fontStyle = tkFont.Font(family="Lucida Grande", size=26)
-        self.textLabel = tk.Label(text="新しく登録するカードをタッチしてください。", font=self.fontStyle)
+        self.textLabel = tk.Label(text=self.firstDispMes, font=self.fontStyle)
         self.textLabel.pack(side="top", expand=1)
         self.quitButton1 = tk.Button(text="キャンセルして終了", command=sys.exit)
         self.quitButton1.pack(fill="both")
@@ -59,22 +61,26 @@ class Application(tk.Frame):
         self.closeButton = tk.Button(master=self.dialog, text=buttonText, command=self.destroyDialog)
         self.closeButton.pack(expand=1, fill="both", padx="30", pady="10")
 
+    def openResultDialog(self, displayText):
+        self.openDialog(titleText="結果メッセージ")
+        self.resultLabel = tk.Label(text=displayText, font=self.fontStyle)
+        self.resultLabel.pack()
+        self.quitButton2 = tk.Button(master=self.dialog, text="プログラムを閉じる", command=sys.exit)
+        self.quitButton2.pack(fill="both")
+    
     def inputInfoDialog(self, titleText):
+        self.textLabel["text"] = self.newWinMes
         self.dialog = tk.Toplevel(self)
         self.dialog.title(titleText)
         self.dialog.grab_set()
-        #self.openDialog(titleText=titleText)
         self.errorMesPack()
         self.entryDays()
         self.buttonFrame = tk.Frame(master=self.dialog)
         self.buttonFrame.grid(row=3)
-        # check関数の値によってcheckボタンを送信ボタンにする
         self.checkButton = tk.Button(master=self.buttonFrame, text="入力チェック", command=self.valuecheck)
-        #self.backButton = tk.Button(master=self.buttonFrame, text="修正", command=lambda: self.alterStateButtonEntry(option="fix"), state=tk.DISABLED)
         self.commitButton = tk.Button(master=self.buttonFrame, text="登録", command=self.commitInput2DB, state=tk.DISABLED)
         self.quitButton = tk.Button(master=self.buttonFrame, text="キャンセルして終了", command=sys.exit)
         self.checkButton.pack(fill="both")
-        #self.backButton.pack(fill="both")
         self.commitButton.pack(fill="both")
         self.quitButton.pack(fill="both")
         
@@ -178,6 +184,7 @@ class Application(tk.Frame):
             self.alterStateButtonEntry(option="check")
 
     def destroyDialog(self):
+        self.textLabel = self.firstDispMes
         self.dialog.destroy()
         self.master.grab_set_global()
         self.startReadNfc()
@@ -225,8 +232,28 @@ class Application(tk.Frame):
         birthday = f"{self.yearInput}-{self.monthInput}-{self.dayInput}"
         dataNow = datetime.datetime.now(tz=timezone('Asia/Tokyo'))
         tourokubi = f'{dataNow.year}-{dataNow.month:02d}-{dataNow.day:02d}'
-        adnfc.add_crew(name=self.nameInput, birthday=birthday, tourokubi=tourokubi, card_hash=self.cardID)
+        status_code = adnfc.add_crew(name=self.nameInput, birthday=birthday,\
+                                    tourokubi=tourokubi, card_hash=self.cardID)
+        if status_code == 200:
+            self.dialog.destroy()
+            self.openResultDialog(displayText="カードの登録が成功しました。")
+            return
 
+
+        elif status_code == 400:
+            mes = "入力された情報を登録できませんでした。次の点を確認してください。¥n"
+            mes += "・名前に特殊な文字を含んでいないか¥n"
+            mes += "・誕生日に存在しない日付を入力していないか"
+
+        else:
+            # 応答は200,400に設定しているので、この分岐は起こらないはずだが、念のため。
+            mes = "予期せぬエラーが発生しました。¥n"
+            mes += "時間を置いて再試行してください。¥n"
+            mes += "それでも解決しない場合は管理者に問い合わせてください。"
+        
+        self.mesLabel["text"] = mes
+        self.mesLabel["foreground"] = "red"
+        return
 
 def osIdentifier():
     osName = platform.system()

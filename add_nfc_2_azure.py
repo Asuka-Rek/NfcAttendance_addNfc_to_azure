@@ -12,7 +12,7 @@ def add_crew(name, birthday, tourokubi, card_hash):
     print("adding new crew...")
     r = requests.post(url, data=json.dumps(payload), headers=headers)
     print(r)
-    print(payload)
+    return r.status_code
 
 def resolve_crew(card_hash):
     payload = {

@@ -236,7 +236,9 @@ class Application(tk.Frame):
                                     tourokubi=tourokubi, card_hash=self.cardID)
         if status_code == 200:
             self.dialog.destroy()
-            self.openResultDialog(displayText="カードの登録が成功しました。")
+            mes = "カードの登録が成功しました。¥n"
+            mes += "このカードに特別な権限を設定したい場合は管理者に連絡してください。"
+            self.openResultDialog(displayText=mes)
             return
 
 

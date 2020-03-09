@@ -71,6 +71,8 @@ class Application(tk.Frame):
     
     def inputInfoDialog(self, titleText):
         self.textLabel["text"] = self.newWinMes
+        self.inInD_lFont = tk.Font(family="System", size=20)
+        self.inInD_bFont = tkFont.Font(family="System", size=18)
         self.dialog = tk.Toplevel(self)
         self.dialog.title(titleText)
         self.dialog.grab_set()

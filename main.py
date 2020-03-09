@@ -19,12 +19,12 @@ class Application(tk.Frame):
         self.create_widgets()
     
     def create_widgets(self):
-        self.fontStyle = tkFont.Font(family="System", size=26)
-        self.buttonFont = tkFont.Font(family="System", size=18)
+        self.fontStyle = tkFont.Font(family="System", size=30)
+        self.buttonFont = tkFont.Font(family="System", size=26)
         self.textLabel = tk.Label(text=self.firstDispMes, font=self.fontStyle)
         self.textLabel.pack(side="top", expand=1)
         self.quitButton1 = tk.Button(text="キャンセルして終了", font=self.buttonFont, command=sys.exit)
-        self.quitButton1.pack(fill="both")
+        self.quitButton1.pack(expand=1, fill="both", padx=30, pady=30)
         self.startReadNfc()
 
     def startReadNfc(self):
@@ -58,9 +58,9 @@ class Application(tk.Frame):
     def openMessageDialog(self, titleText, displayText, buttonText):
         self.openDialog(titleText=titleText)
         self.textLabel = tk.Label(master=self.dialog, text=displayText, font=self.fontStyle)
-        self.textLabel.pack(expand=1, fill="both", padx="30", pady="10")
+        self.textLabel.pack(expand=1, fill="both", padx=30, pady=10)
         self.closeButton = tk.Button(master=self.dialog, text=buttonText, font=self.buttonFont, command=self.destroyDialog)
-        self.closeButton.pack(expand=1, fill="both", padx="30", pady="10")
+        self.closeButton.pack(expand=1, fill="both", padx=30, pady=10)
 
     def openResultDialog(self, displayText):
         self.openDialog(titleText="結果メッセージ")

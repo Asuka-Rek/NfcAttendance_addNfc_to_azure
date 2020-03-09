@@ -141,7 +141,8 @@ class Application(tk.Frame):
         if len(self.nameInput) == 0 or len(self.nameInput) >= 20:
             self.errMes0["text"] = "名前は1文字以上、20文字未満で入力してください。"
             self.allErrs += 1
-
+        else:
+            self.errMes0["text"] = ""
         # 整数値チェック 年
         try:
             self.yearInput = int(self.yearEntry.get())

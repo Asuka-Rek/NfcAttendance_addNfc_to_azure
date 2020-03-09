@@ -89,7 +89,7 @@ class Application(tk.Frame):
     def errorMesPack(self):
         self.erMesFrame = tk.Frame(master=self.dialog)
         self.erMesFrame.grid(row=0)
-        self.mesLabel = tk.Label(master=self.erMesFrame, text="カードを登録します。\nカードの所有者についての情報を入力してください。")
+        self.mesLabel = tk.Label(master=self.erMesFrame, text="カードを登録します。\nカードの所有者についての情報を入力してください。", font=self.fontStyle)
         self.errMes0 = tk.Label(self.erMesFrame, foreground="red")
         self.errMes1 = tk.Label(self.erMesFrame, foreground="red")
         self.errMes2 = tk.Label(self.erMesFrame, foreground="red")
@@ -147,7 +147,7 @@ class Application(tk.Frame):
             self.errMes1["text"] = f"年{intErrText}"
             self.allErrs += 1
         else: # 値範囲チェック
-            if self.yearInput < 0:
+            if self.yearInput <= 0 or self.yearInput > 9999:
                 # 細かい不正値はDB側のエラーでキャッチ
                 self.errMes1["text"] = f"年{invalidErrText}"
                 self.allErrs += 1
@@ -232,7 +232,7 @@ class Application(tk.Frame):
     def commitInput2DB(self):
         birthday = f"{self.yearInput}-{self.monthInput}-{self.dayInput}"
         dataNow = datetime.datetime.now(tz=timezone('Asia/Tokyo'))
-        tourokubi = f'{dataNow.year}-{dataNow.month:02d}-{dataNow.day:02d}'
+        tourokubi = f'{dataNow.year:04d}-{dataNow.month:02d}-{dataNow.day:02d}'
         status_code = adnfc.add_crew(name=self.nameInput, birthday=birthday,\
                                     tourokubi=tourokubi, card_hash=self.cardID)
         if status_code == 200:

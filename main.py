@@ -64,8 +64,8 @@ class Application(tk.Frame):
 
     def openResultDialog(self, displayText):
         self.openDialog(titleText="結果メッセージ")
-        self.resultLabel = tk.Label(text=displayText, font=self.fontStyle)
-        self.resultLabel.pack()
+        self.resultLabel = tk.Label(master=self.dialog, text=displayText, font=self.fontStyle)
+        self.resultLabel.pack(expand=1)
         self.quitButton2 = tk.Button(master=self.dialog, text="プログラムを閉じる", font=self.buttonFont, command=sys.exit)
         self.quitButton2.pack(fill="both")
     

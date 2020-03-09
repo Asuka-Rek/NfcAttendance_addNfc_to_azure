@@ -19,10 +19,11 @@ class Application(tk.Frame):
         self.create_widgets()
     
     def create_widgets(self):
-        self.fontStyle = tkFont.Font(family="Lucida Grande", size=26)
+        self.fontStyle = tkFont.Font(family="System", size=26)
+        self.buttonFont = tk.Font(family="System", size=18)
         self.textLabel = tk.Label(text=self.firstDispMes, font=self.fontStyle)
         self.textLabel.pack(side="top", expand=1)
-        self.quitButton1 = tk.Button(text="キャンセルして終了", command=sys.exit)
+        self.quitButton1 = tk.Button(text="キャンセルして終了", font=self.buttonFont, command=sys.exit)
         self.quitButton1.pack(fill="both")
         self.startReadNfc()
 
@@ -58,14 +59,14 @@ class Application(tk.Frame):
         self.openDialog(titleText=titleText)
         self.textLabel = tk.Label(master=self.dialog, text=displayText, font=self.fontStyle)
         self.textLabel.pack(expand=1, fill="both", padx="30", pady="10")
-        self.closeButton = tk.Button(master=self.dialog, text=buttonText, command=self.destroyDialog)
+        self.closeButton = tk.Button(master=self.dialog, text=buttonText, font=self.buttonFont, command=self.destroyDialog)
         self.closeButton.pack(expand=1, fill="both", padx="30", pady="10")
 
     def openResultDialog(self, displayText):
         self.openDialog(titleText="結果メッセージ")
         self.resultLabel = tk.Label(text=displayText, font=self.fontStyle)
         self.resultLabel.pack()
-        self.quitButton2 = tk.Button(master=self.dialog, text="プログラムを閉じる", command=sys.exit)
+        self.quitButton2 = tk.Button(master=self.dialog, text="プログラムを閉じる", font=self.buttonFont, command=sys.exit)
         self.quitButton2.pack(fill="both")
     
     def inputInfoDialog(self, titleText):
@@ -77,9 +78,9 @@ class Application(tk.Frame):
         self.entryDays()
         self.buttonFrame = tk.Frame(master=self.dialog)
         self.buttonFrame.grid(row=3)
-        self.checkButton = tk.Button(master=self.buttonFrame, text="入力チェック", command=self.valuecheck)
-        self.commitButton = tk.Button(master=self.buttonFrame, text="登録", command=self.commitInput2DB, state=tk.DISABLED)
-        self.quitButton = tk.Button(master=self.buttonFrame, text="キャンセルして終了", command=sys.exit)
+        self.checkButton = tk.Button(master=self.buttonFrame, text="入力チェック", font=self.buttonFont, command=self.valuecheck)
+        self.commitButton = tk.Button(master=self.buttonFrame, text="登録", font=self.buttonFont, command=self.commitInput2DB, state=tk.DISABLED)
+        self.quitButton = tk.Button(master=self.buttonFrame, text="キャンセルして終了", font=self.buttonFont, command=sys.exit)
         self.checkButton.pack(fill="both")
         self.commitButton.pack(fill="both")
         self.quitButton.pack(fill="both")

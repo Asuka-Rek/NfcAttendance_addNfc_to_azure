@@ -12,6 +12,8 @@ def add_crew(name, birthday, tourokubi, card_hash):
     print("adding new crew...")
     r = requests.post(url, data=json.dumps(payload), headers=headers)
     print(r)
+    if r.status_code != 200:
+        print(r.content.decode('utf-8'))
     return r.status_code
 
 def resolve_crew(card_hash):

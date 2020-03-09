@@ -67,7 +67,7 @@ class Application(tk.Frame):
         self.resultLabel = tk.Label(master=self.dialog, text=displayText, font=self.fontStyle)
         self.resultLabel.pack(expand=1)
         self.quitButton2 = tk.Button(master=self.dialog, text="プログラムを閉じる", font=self.buttonFont, command=sys.exit)
-        self.quitButton2.pack(fill="both")
+        self.quitButton2.pack(expand=1, fill="both", padx=30, pady=30)
     
     def inputInfoDialog(self, titleText):
         self.textLabel["text"] = self.newWinMes
